@@ -15,15 +15,13 @@
  *
  * This file is the implementation of all the gradebook functions for this project.
  * */
-
+#include "stats.h"
 #include <iostream>
 #include <array>
 #include <string>
 #include <limits>
 #include <iomanip>
 
-constexpr int STUDENT_COUNT = 6;
-constexpr int ASSIGNMENT_COUNT = 5;
 constexpr int NAME_WIDTH = 14;
 /**
  * @brief Calculates the selected students average
@@ -235,31 +233,6 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-double studentAverage(const std::array<std::array<double, ASSIGNMENT_COUNT>, STUDENT_COUNT>& scores, int studentIndex) {
-    // Check that the student index is correct
-    if ( studentIndex < 0 || studentIndex >= STUDENT_COUNT ) {
-        std::cout << "Invalid index provided\n";
-        return -1.0;
-    }
-    double total{};
-
-    // Gets the total of the assignment grades for the student
-    for ( auto i{0}; i < ASSIGNMENT_COUNT; i++ ) {
-        total += scores[studentIndex][i];
-    }
-
-    return total / ASSIGNMENT_COUNT;
-}
-
-double assignmentAverage(const std::array<std::array<double, ASSIGNMENT_COUNT>, STUDENT_COUNT>& scores, int assignmentIndex) {
-    double total{};
-
-    for (auto i{0}; i < STUDENT_COUNT; i++) {
-        total += scores[i][assignmentIndex];
-    }
-
-    return total / STUDENT_COUNT;
-}
 
 void findExtremes(const std::array<std::array<double, ASSIGNMENT_COUNT>, STUDENT_COUNT>& scores, int studentIndex, double &lowest, double &highest) {
     lowest = std::numeric_limits<double>::max();
@@ -312,17 +285,6 @@ int countGrade(const std::array<std::array<double, ASSIGNMENT_COUNT>, STUDENT_CO
     return count;
 }
 
-double classAverage(const std::array<std::array<double, ASSIGNMENT_COUNT>, STUDENT_COUNT>& scores) {
-    auto total{0.0};
-
-    for ( auto i{0}; i < STUDENT_COUNT; i++ ) {
-        for ( auto j{0}; j < ASSIGNMENT_COUNT; j++ ) {
-            total += scores[i][j];
-        }
-    }
-
-    return total / (STUDENT_COUNT * ASSIGNMENT_COUNT);
-}
 
 bool hasPerfectScore(const std::array<std::array<double, ASSIGNMENT_COUNT>, STUDENT_COUNT>& scores, int studentIndex) {
     for ( auto i{0}; i < ASSIGNMENT_COUNT; i++ ) {
